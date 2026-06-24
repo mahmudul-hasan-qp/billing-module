@@ -1,0 +1,40 @@
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/build
+
+# Dependencies
+/node_modules
+
+# IDEs and Editors
+/.idea
+/.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+/coverage
+/.nyc_output
+
+# Environment Variables (Crucial for security!)
+.env
+.env.development
+.env.test
+.env.production
+.env.local
+
+# OS system files
+.DS_Store
+Thumbs.db
