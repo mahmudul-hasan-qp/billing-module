@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Coupon, DiscountStrategy, User } from '../types';
+import { Coupon } from '../../domain/entities/coupon.entity';
+import { User } from '../../domain/entities/user.entity';
+import { CouponStrategy } from '../types/coupon';
 
 @Injectable()
-export class StandardCouponStrategy implements DiscountStrategy {
+export class StandardCouponStrategy implements CouponStrategy {
   canApply(coupon: Coupon): boolean {
     return coupon.isThirdParty === false;
   }
@@ -21,11 +23,11 @@ export class StandardCouponStrategy implements DiscountStrategy {
   }
 
   private userHasCoupon(user: User, coupon: Coupon): boolean {
-    if (!user.assignedCouponCodes || !Array.isArray(user.assignedCouponCodes))
+    if (!user.assignedCoupons || !Array.isArray(user.assignedCoupons))
       return false;
 
-    const normalizedUserCodes = user.assignedCouponCodes.map((code) =>
-      code.trim().toUpperCase(),
+    const normalizedUserCodes = user.assignedCoupons.map((coupon) =>
+      coupon.code?.trim()?.toUpperCase(),
     );
     const normalizedCouponCode = coupon.code.trim().toUpperCase();
 

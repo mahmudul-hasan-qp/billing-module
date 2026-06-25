@@ -18,13 +18,12 @@ export class PricingController {
     status: 400,
     description: 'Bad request if calculations fail.',
   })
-  async calculateDiscount(
-    @Body() body: ApplyDiscountDto,
-  ): Promise<{ finalPrice: number }> {
+  @Post('apply-discount')
+  async applyDiscount(@Body() dto: ApplyDiscountDto) {
     const finalPrice = await this.pricingService.applyDiscount(
-      body.user,
-      body.coupon,
-      body.originalSubscriptionPrice,
+      dto.userId,
+      dto.couponCode,
+      dto.originalSubscriptionPrice,
     );
 
     return { finalPrice };

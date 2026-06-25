@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Coupon, DiscountStrategy, User } from '../types';
+import { Coupon } from '../../domain/entities/coupon.entity';
+import { User } from '../../domain/entities/user.entity';
+import { CouponStrategy } from '../types/coupon';
 
 @Injectable()
-export class ThirdPartyCouponStrategy implements DiscountStrategy {
+export class ThirdPartyCouponStrategy implements CouponStrategy {
   canApply(coupon: Coupon): boolean {
     return coupon.isThirdParty === true;
   }
