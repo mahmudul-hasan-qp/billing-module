@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
@@ -13,8 +13,8 @@ export class PricingRepository {
   async findUserWithSpecificCoupon(
     userId: string,
     couponCode: string,
-  ): Promise<User> {
-    const user = await this.userRepo.findOne({
+  ): Promise<User | null> {
+    return this.userRepo.findOne({
       where: {
         id: userId,
         assignedCoupons: {
@@ -25,13 +25,5 @@ export class PricingRepository {
         assignedCoupons: true,
       },
     });
-
-    if (!user) {
-      throw new NotFoundException(
-        `Invalid User ID or this coupon is not assigned to the user.`,
-      );
-    }
-
-    return user;
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PricingRepository } from '../../domain/repositories/pricing.repository';
 import { StandardCouponStrategy } from '../strategies/standard-coupon.strategy';
 import { ThirdPartyCouponStrategy } from '../strategies/third-party-coupon.strategy';
@@ -21,16 +21,20 @@ export class PricingService {
     couponCode: string,
     originalSubscriptionPrice: number,
   ): Promise<number> {
-    // 1. Single database hit! Fetches user and the verified coupon together
     const user = await this.pricingRepository.findUserWithSpecificCoupon(
       userId,
       couponCode,
     );
 
-    // 2. Extract the matched coupon from the loaded relationship array
+    if (!user || !user.assignedCoupons?.length) {
+      throw new NotFoundException(
+        `Invalid User ID or this coupon is not assigned to the user.`,
+      );
+    }
+
+    // From this point down, 'user' is guaranteed to be a valid User entity by TypeScript
     const coupon = user.assignedCoupons[0];
 
-    // 3. Find and run the runtime business logic calculation tool
     const matchedStrategy = this.strategies.find((strategy) =>
       strategy.canApply(coupon),
     );
