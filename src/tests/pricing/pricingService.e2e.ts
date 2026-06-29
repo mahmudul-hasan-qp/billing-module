@@ -4,9 +4,9 @@ import request from 'supertest';
 import { App } from 'supertest/types';
 import { GenericContainer, StartedTestContainer } from 'testcontainers';
 import { DataSource } from 'typeorm';
-import { AppModule } from '../../src/app.module';
-import { Coupon } from '../../src/modules/pricing/domain/entities/coupon.entity';
-import { User } from '../../src/modules/pricing/domain/entities/user.entity';
+import { AppModule } from '../../app.module';
+import { Coupon } from '../../modules/pricing/domain/entities/coupon.entity';
+import { User } from '../../modules/pricing/domain/entities/user.entity';
 
 describe('Pricing Service Flow (e2e)', () => {
   let app: INestApplication<App>;
