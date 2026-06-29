@@ -5,5 +5,7 @@
   "testRegex": ".e2e.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
-  }
+  },
+  "globalSetup": "<rootDir>/global/global-setup.ts",
+  "globalTeardown": "<rootDir>/global/global-teardown.ts"
 }
